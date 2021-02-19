@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@400;700;800&display=swap');
+
+body {
+    background-color: #e1e9f0;
+}
+
+.legalmonster-plugin {
+  font-family: "Nunito", sans-serif !important;
+  font-size:1.25em;
+}
+
+.legalmonster-plugin p {
+  font-size:1.25em; 
+}
+
+
+.legalmonster-plugin img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+} 
+
+.center {
+  margin: auto;
+  padding: 10px;
+}
+
+.w-100 {
+  width:100%;
+}
+
+.w-75 {
+  width:75%;
+}
+
+.legalmonster-plugin h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Nunito", sans-serif !important;
+  font-weight: 700 !important;
+  color: rgba(22,30,46,var(--text-opacity));
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.btn-outline-primary {
+  color: #007bff !important;
+  background-color: #fff !important;
+  border-color: #007bff !important;
+}
+
+.btn-outline-primary:hover {
+  color: #fff !important;
+  background-color: #007bff !important;
+  border-color: #007bff !important;
+}
+
+.btn-success {
+  background-color: #56b682;
+  border-color: #56b682;
+}
+
+.btn-success:hover {
+  background-color: #389764;
+  border-color: #389764;
+}
+
+.btn {
+  font-family: "Nunito Bold", sans-serif !important;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
