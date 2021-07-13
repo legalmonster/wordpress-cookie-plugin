@@ -3,7 +3,7 @@
  * Plugin Name: Legalmonster Cookie Plugin
  * Plugin URI: http://www.legalmonster.com/cookie
  * Description: Collect consent for your cookies, email marketing, privacy policy and T&Cs. Everywhere. Every time.
- * Version: 1.0
+ * Version: 1.0.0
  * Author: Legal Monster Aps
  * Author URI: http://www.legalmonster.com
  */
@@ -17,8 +17,8 @@ class Legalmonster_Plugin {
 		// Plugin Details
         $this->plugin               = new stdClass;
         $this->plugin->name         = 'legalmonster'; // Plugin Folder
-        $this->plugin->displayName  = 'Legal Monster Cookie Plugin'; // Plugin Name
-        $this->plugin->version      = '1.4.6';
+        $this->plugin->displayName  = 'Legal Monster Cookie Pop-up'; // Plugin Name
+        $this->plugin->version      = '1.0.0';
         $this->plugin->folder       = plugin_dir_path( __FILE__ );
         $this->plugin->url          = plugin_dir_url( __FILE__ );
         $this->plugin->db_welcome_dismissed_key = $this->plugin->name . '_welcome_dismissed_key';
@@ -29,8 +29,25 @@ class Legalmonster_Plugin {
 
         // Frontend Hooks
 		add_action( 'wp_footer', array( &$this, 'frontendFooter' ) );
+		add_action( 'admin_enqueue_scripts', array( 
+                    $this,
+                    'legalmonster_style'
+                ));
+	}
 
-		add_action( 'admin_enqueue_scripts', 'wpdocs_enqueue_custom_admin_style' );
+
+
+
+	/**
+	 * Enqueue a script in the WordPress admin on edit.php.
+	 *
+	 * @param int $hook Hook suffix for the current admin page.
+	 */
+	function legalmonster_style( $hook ) {
+		if($hook != 'settings_page_legalmonster') {
+	        return;
+	    }
+		wp_enqueue_style( 'wp-legalmonster-style', plugins_url('css/style.css', __FILE__));
 	}
 
 	/**
@@ -57,7 +74,7 @@ class Legalmonster_Plugin {
 	        	// Save
 				// $_REQUEST has already been slashed by wp_magic_quotes in wp-settings
 				// so do nothing before saving
-	    		update_option( 'lm_insert_footer', $_REQUEST['lm_insert_footer'] );
+	    		update_option( 'lm_insert_footer', sanitize_text_field($_REQUEST['lm_insert_footer']) );
 				update_option( $this->plugin->db_welcome_dismissed_key, 1 );
 				$this->message = __( 'Settings Saved.', 'legalmonster' );
 			}
@@ -72,17 +89,6 @@ class Legalmonster_Plugin {
         include_once( $this->plugin->folder . '/views/settings.php' );
     }
 
-	function wpdocs_enqueue_custom_admin_style($hook_suffix) {
-    // Check if it's the ?page=yourpagename. If not, just empty return before executing the folowing scripts. 
-	    if($hook_suffix != 'settings_page_legalmonster') {
-	        return;
-	    }
-
-	    // Load your css.
-	    wp_register_style( 'custom_wp_admin_css', plugins_url('css/style.css',__FILE__ ));
-	    wp_enqueue_style( 'custom_wp_admin_css' );
-	}
-
     /**
 	* Loads plugin textdomain
 	*/
@@ -94,7 +100,16 @@ class Legalmonster_Plugin {
 	* Outputs script / CSS to the frontend footer
 	*/
 	function frontendFooter() {
-		$this->output( 'lm_insert_footer' );
+		$snippet = '
+			<script>
+	    		!function(){var i,e,t,s=window.legal=window.legal||[];if(s.SNIPPET_VERSION="3.0.0",i="https://widgets.legalmonster.com/v1/legal.js",!s.__VERSION__)if(s.invoked)window.console&&console.info&&console.info("legal.js: The initialisation snippet is included more than once on this page, and does not need to be.");else{for(s.invoked=!0,s.methods=["cookieConsent","document","ensureConsent","handleWidget","signup","user"],s.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);return e.unshift(t),s.push(e),s}},e=0;e<s.methods.length;e++)t=s.methods[e],s[t]=s.factory(t);s.load=function(e,t){var n,o=document.createElement("script");o.setAttribute("data-legalmonster","sven"),o.type="text/javascript",o.async=!0,o.src=i,(n=document.getElementsByTagName("script")[0]).parentNode.insertBefore(o,n),s.__project=e,s.__loadOptions=t||{}},s.widget=function(e){s.__project||s.load(e.widgetPublicKey),s.handleWidget(e)}}}();
+
+			    legal.widget({
+			        type: "cookie",
+			        widgetPublicKey: "' . esc_js($this->output( 'lm_insert_footer' )) . '" ,
+			    });
+			</script>';
+			echo $snippet;
 	}
 
 	/**
@@ -143,7 +158,7 @@ class Legalmonster_Plugin {
 		}
 
 		// Output
-		echo wp_unslash( $meta );
+		return sanitize_text_field( $meta );
 	}
 }
 

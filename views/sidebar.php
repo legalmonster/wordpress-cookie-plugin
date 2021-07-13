@@ -4,8 +4,6 @@
  */
 ?>
 
-<link rel="stylesheet" href="<?php echo plugin_dir_url( __DIR__ ).'css/style.css';?>">
-
 <!-- Improve Your Site -->
 <div class="postbox">
 	<div class="inside">
