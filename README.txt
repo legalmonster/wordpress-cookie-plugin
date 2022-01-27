@@ -32,7 +32,7 @@ Upgrade to our cookie essential plan for only $29/month and customize your cooki
 * Up to 1000 pages scanned
 * Custom Pop-up styling
 
-Learn more about Openli and how we can help you on your compliance journey at [legalmonster.com](https://openli.com). 
+Learn more about Openli and how we can help you on your compliance journey at [openli.com](https://openli.com). 
 
 
 == Installation ==
