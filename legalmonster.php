@@ -17,7 +17,7 @@ class Legalmonster_Plugin {
 		// Plugin Details
         $this->plugin               = new stdClass;
         $this->plugin->name         = 'legalmonster'; // Plugin Folder
-        $this->plugin->displayName  = 'Legal Monster Cookie Pop-up'; // Plugin Name
+        $this->plugin->displayName  = 'Openli Cookie Pop-up'; // Plugin Name
         $this->plugin->version      = '1.0.0';
         $this->plugin->folder       = plugin_dir_path( __FILE__ );
         $this->plugin->url          = plugin_dir_url( __FILE__ );
